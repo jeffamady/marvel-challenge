@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Usuario/Documents/Challenges/MarvelApp/app/src/main/res/drawable/ic_superhero.xml" value="0.1" />
         <entry key="..\:/Users/Usuario/Documents/Challenges/MarvelApp/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/Usuario/Documents/Challenges/MarvelApp/app/src/main/res/layout/activity_main_screen.xml" value="0.1" />
         <entry key="..\:/Users/Usuario/Documents/Challenges/MarvelApp/app/src/main/res/layout/fragment_characters.xml" value="0.1" />
         <entry key="..\:/Users/Usuario/Documents/Challenges/MarvelApp/app/src/main/res/layout/fragment_events.xml" value="0.1" />
         <entry key="..\:/Users/Usuario/Documents/Challenges/MarvelApp/app/src/main/res/layout/view_hero_item.xml" value="0.1" />
+        <entry key="..\:/Users/Usuario/Documents/Challenges/MarvelApp/app/src/main/res/menu/main_nav_menu.xml" value="0.25" />
       </map>
     </option>
   </component>
