@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "623086054626",
+    "project_id": "marvel-app-11b36",
+    "storage_bucket": "marvel-app-11b36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623086054626:android:0693fd212d7592bc5b02bb",
+        "android_client_info": {
+          "package_name": "com.amadydev.intermedia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623086054626-m2dlmb8mlvu73lthen85s4fh5mqovns2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXJG66dG8Ea3t8EUiofrAuq_-xf6U2WaY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623086054626-m2dlmb8mlvu73lthen85s4fh5mqovns2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

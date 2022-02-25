@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Marvel App</string>
+
+    <string name="title_characters">Personajes</string>
+    <string name="title_events">Eventos</string>
+
+</resources>
