@@ -3,5 +3,24 @@
 
     <string name="title_characters">Personajes</string>
     <string name="title_events">Eventos</string>
+    // Auth
+    <string name="marvel_logo">Marvel logo</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
+    <string name="signup">SIGNUP</string>
+    <string name="invalid_password">Password must have at least 8 characters, an uppercase and 1 number</string>
+    <string name="invalid_name">Please enter a name</string>
+    <string name="invalid_email">Not a valid email</string>
+    <string name="already_have_an_account_sign_in">Already have an account? SIGN IN</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? SIGN UP</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="registered">User registered successfully</string>
+    <string name="login_form_error">The combination of Email and Password is not correct. Please retry.</string>
+    <string name="signup_form_error">User already registered.Please try with another.</string>
+    <string name="success">Success</string>
+    <string name="facebook_app_id">2217065038431686</string>
+    <string name="fb_login_protocol_scheme">fb2217065038431686</string>
 
 </resources>

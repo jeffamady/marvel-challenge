@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    // Auth
+    <dimen name="header_margin_bottom">22dp</dimen>
+    <dimen name="auth_margin_start">11dp</dimen>
+    <dimen name="auth_margin_top">11dp</dimen>
+    <dimen name="auth_margin_end">21dp</dimen>
+    <dimen name="auth_et_text_size">21sp</dimen>
+    <dimen name="auth_til_height">56dp</dimen>
 
+    <!--Progress Dialog-->
+    <dimen name="progressbar_size">50dp</dimen>
+    <dimen name="progress_text_size">18sp</dimen>
+    <dimen name="progress_padding">10dp</dimen>
+    <dimen name="progress_margin">10dp</dimen>
 </resources>
