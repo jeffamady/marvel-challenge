@@ -10,6 +10,7 @@ import com.amadydev.intermedia.data.repositories.CharactersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
@@ -18,6 +19,7 @@ class CharactersViewModel @Inject constructor(
 
     private val _characters = MutableLiveData<List<Character>>()
     val characters: LiveData<List<Character>> get() = _characters
+    private var mOffset = 1
 
     init {
         loadCharacters(0)
@@ -38,5 +40,7 @@ class CharactersViewModel @Inject constructor(
 
     fun loadMoreCharacters() {
         // TODO complete
+        loadCharacters(mOffset)
+        mOffset ++
     }
 }

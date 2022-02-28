@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.amadydev.intermedia.databinding.FragmentCharactersBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +22,7 @@ class CharactersFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCharactersBinding.inflate(inflater, container, false)
 
 
@@ -46,11 +48,13 @@ class CharactersFragment : Fragment() {
 
     private fun setupCharactersList() {
         adapter.onClickListener = { character ->
-            // TODO complete
+            CharactersFragmentDirections.actionGoToCharacterDetails(character).apply {
+                findNavController().navigate(this)
+            }
         }
         binding.listCharacters.adapter = adapter
         viewModel.characters.observe(viewLifecycleOwner) { characters ->
-            // TODO fill adapter items
+            adapter.addAll(characters)
         }
     }
 }
