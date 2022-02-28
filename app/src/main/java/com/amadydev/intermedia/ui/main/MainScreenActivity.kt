@@ -1,10 +1,13 @@
 package com.amadydev.intermedia.ui.main
 
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.amadydev.intermedia.R
 import com.amadydev.intermedia.databinding.ActivityMainScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +26,16 @@ class MainScreenActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment)
         binding.bottomNavView.setupWithNavController(navController)
         binding.bottomNavView.itemIconTintList = null
+        setupActionBar()
     }
 
+
+    private fun setupActionBar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = ""
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
 }

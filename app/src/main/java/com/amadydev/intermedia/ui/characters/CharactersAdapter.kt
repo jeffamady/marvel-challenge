@@ -7,6 +7,7 @@ import com.amadydev.intermedia.R
 import com.amadydev.intermedia.ui.base.BaseAdapter
 import com.amadydev.intermedia.data.models.Character
 import com.amadydev.intermedia.databinding.ViewHeroItemBinding
+import com.amadydev.intermedia.utils.binding.setImage
 
 class CharactersAdapter : BaseAdapter<Character, CharactersAdapter.CharactersViewHolder>() {
 
@@ -33,6 +34,11 @@ class CharactersAdapter : BaseAdapter<Character, CharactersAdapter.CharactersVie
         fun bind(item: Character) = with(itemView) {
             binding.root.setOnClickListener {
                 onClickListener?.invoke(item)
+            }
+            with(binding) {
+                setImage(imageCharacterThumbnail, item.thumbnail)
+                textName.text = item.name
+                textDescription.text = item.description
             }
         }
     }

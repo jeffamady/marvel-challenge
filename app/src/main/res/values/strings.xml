@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Marvel App</string>
+    <string name="app_name">Marvel Challenge</string>
 
     <string name="title_characters">Personajes</string>
     <string name="title_events">Eventos</string>
-    // Auth
+    <!--    Auth-->
     <string name="marvel_logo">Marvel logo</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
@@ -22,5 +22,7 @@
     <string name="success">Success</string>
     <string name="facebook_app_id">2217065038431686</string>
     <string name="fb_login_protocol_scheme">fb2217065038431686</string>
+    <!-- Character Details -->
+    <string name="appears_in">APPEARS IN THESE COMICS</string>
 
 </resources>
