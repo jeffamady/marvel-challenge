@@ -2,8 +2,8 @@ package com.amadydev.intermedia.utils.binding
 
 import android.view.View
 import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.amadydev.intermedia.data.models.Thumbnail
+import com.bumptech.glide.Glide
 
 //@BindingAdapter("imageThumbnail")
 fun setImage(view: ImageView, thumbnail: Thumbnail) {

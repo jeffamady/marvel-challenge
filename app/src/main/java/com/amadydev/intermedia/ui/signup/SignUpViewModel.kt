@@ -8,6 +8,7 @@ import com.amadydev.intermedia.R
 import com.amadydev.intermedia.data.firebase.FirebaseDb
 import com.amadydev.intermedia.utils.extensions.isEmailValid
 import com.amadydev.intermedia.utils.extensions.isPasswordValid
+import com.amadydev.intermedia.utils.extensions.isSamePassword
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,18 +17,22 @@ class SignUpViewModel @Inject constructor(private val db: FirebaseDb) : ViewMode
     private val _signUpState = MutableLiveData<SignUpState>()
     val signUpState: LiveData<SignUpState> = _signUpState
 
-    fun validateForm(name: String, email: String, password: String) {
+    fun validateForm(name: String, email: String, password: String, confirmPassword: String) {
         when {
             TextUtils.isEmpty(name) -> {
                 _signUpState.value = SignUpState.NameError(R.string.invalid_name)
                 _signUpState.value = SignUpState.IsFormValid(false)
             }
-            !isEmailValid(email) -> {
+            !email.isEmailValid() -> {
                 _signUpState.value = SignUpState.EmailError(R.string.invalid_email)
                 _signUpState.value = SignUpState.IsFormValid(false)
             }
-            !isPasswordValid(password) -> {
+            !password.isPasswordValid() -> {
                 _signUpState.value = SignUpState.PasswordError(R.string.invalid_password)
+                _signUpState.value = SignUpState.IsFormValid(false)
+            }
+            !password.isSamePassword(confirmPassword) -> {
+                _signUpState.value = SignUpState.ConfirmPasswordError(R.string.not_same_password)
                 _signUpState.value = SignUpState.IsFormValid(false)
             }
             else -> {
@@ -43,21 +48,23 @@ class SignUpViewModel @Inject constructor(private val db: FirebaseDb) : ViewMode
         db.registerUser(this, name, email, password)
     }
 
-    fun userRegisteredSuccess(isSuccess: Boolean) {
+    fun userRegisteredSuccess(isSuccess: Boolean, name: String = "") {
         _signUpState.value = SignUpState.Loading(false)
-        if (isSuccess)
-            _signUpState.value = SignUpState.Success(R.string.registered)
-        else
+        if (isSuccess) {
+            db.signOutUser()
+            _signUpState.value = SignUpState.Success(R.string.registered, name)
+        } else
             _signUpState.value = SignUpState.Error
 
     }
 
     sealed class SignUpState {
-        data class Success(val resourceId: Int) : SignUpState()
+        data class Success(val resourceId: Int, val name: String) : SignUpState()
         data class IsFormValid(val isFormValid: Boolean) : SignUpState()
         data class NameError(val resourceId: Int) : SignUpState()
         data class EmailError(val resourceId: Int) : SignUpState()
         data class PasswordError(val resourceId: Int) : SignUpState()
+        data class ConfirmPasswordError(val resourceId: Int) : SignUpState()
         data class Loading(val isLoading: Boolean) : SignUpState()
         object Error : SignUpState()
     }

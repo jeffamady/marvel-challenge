@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,8 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
-
-    private lateinit var binding: FragmentCharactersBinding
+    private var _binding: FragmentCharactersBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: CharactersViewModel by viewModels()
     private val adapter = CharactersAdapter()
 
@@ -23,16 +23,12 @@ class CharactersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCharactersBinding.inflate(inflater, container, false)
-
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentCharactersBinding.inflate(inflater, container, false)
         setupCharactersList()
         setupPagination()
+        setObservers()
+        setListeners()
+        return binding.root
     }
 
     private fun setupPagination() {
@@ -53,8 +49,40 @@ class CharactersFragment : Fragment() {
             }
         }
         binding.listCharacters.adapter = adapter
-        viewModel.characters.observe(viewLifecycleOwner) { characters ->
-            adapter.addAll(characters)
+    }
+
+    private fun setObservers() {
+        viewModel.charactersState.observe(viewLifecycleOwner) {
+            with(binding) {
+                when (it) {
+                    is CharactersViewModel.CharactersState.Success -> {
+                        adapter.addAll(it.characters)
+                        iError.root.isVisible = false
+                        listCharacters.isVisible = true
+                    }
+                    is CharactersViewModel.CharactersState.Loading -> {
+                        iError.root.isVisible = false
+                        loading.root.isVisible = it.isLoading
+                    }
+                    is CharactersViewModel.CharactersState.Error -> {
+                        listCharacters.isVisible = false
+                        iError.root.isVisible = true
+                        iError.tvError.text = getString(it.resId)
+                    }
+                }
+            }
         }
     }
+
+    private fun setListeners() {
+        binding.iError.btnRetry.setOnClickListener {
+            viewModel.retry()
+        }
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
 }

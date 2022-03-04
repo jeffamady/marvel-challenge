@@ -1,14 +1,16 @@
 package com.amadydev.intermedia.di
 
-import com.amadydev.intermedia.data.services.CharacterService
+import com.amadydev.intermedia.BuildConfig.BASE_API_URL
+import com.amadydev.intermedia.data.datasource.CharactersDataSource
+import com.amadydev.intermedia.data.services.CharactersService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -24,14 +26,15 @@ class NetModule {
     }
 
     @Provides
-    fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
+    fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        .build()
 
-    @Singleton
     @Provides
-    fun provideCharacterService(@MarvelApi retrofit: Retrofit): CharacterService =
-        retrofit.create(CharacterService::class.java)
+    fun provideCharactersService(@MarvelApi retrofit: Retrofit): CharactersService =
+        retrofit.create(CharactersService::class.java)
 
-    companion object {
-        const val BASE_API_URL = "https://gateway.marvel.com/v1/public/"
-    }
+    @Provides
+    fun provideCharactersDataSource(charactersService: CharactersService) =
+        CharactersDataSource(charactersService)
 }
