@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.amadydev.intermedia.R
-import com.amadydev.intermedia.databinding.ActivityMainScreenBinding
 import com.amadydev.intermedia.databinding.ActivitySignUpBinding
 import com.amadydev.intermedia.ui.base.BaseActivity
 import com.amadydev.intermedia.ui.login.LoginActivity
-import com.amadydev.intermedia.ui.main.MainScreenActivity
 import com.amadydev.intermedia.utils.extensions.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,6 +37,8 @@ class SignUpActivity : BaseActivity() {
                         etEmail.error = getString(it.resourceId)
                     is SignUpViewModel.SignUpState.PasswordError ->
                         etPassword.error = getString(it.resourceId)
+                    is SignUpViewModel.SignUpState.ConfirmPasswordError ->
+                        etConfirmPassword.error = getString(it.resourceId)
                     is SignUpViewModel.SignUpState.IsFormValid -> {
                         btnSignUp.isEnabled = it.isFormValid
                         if (it.isFormValid)
@@ -51,10 +51,10 @@ class SignUpActivity : BaseActivity() {
                     is SignUpViewModel.SignUpState.Success -> {
                         Toast.makeText(
                             this@SignUpActivity,
-                            getString(it.resourceId),
-                            Toast.LENGTH_SHORT
+                            getString(it.resourceId, it.name),
+                            Toast.LENGTH_LONG
                         ).show()
-                        startActivity(Intent(this@SignUpActivity, MainScreenActivity::class.java))
+                        startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
                         finish()
                     }
                     SignUpViewModel.SignUpState.Error ->
@@ -68,7 +68,7 @@ class SignUpActivity : BaseActivity() {
         with(binding) {
             tvGoToLogin.paint.isUnderlineText = true
             tvGoToLogin.setOnClickListener {
-                startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                onBackPressed()
             }
             btnSignUp.setOnClickListener {
                 signUpViewModel.registerUser(
@@ -85,20 +85,34 @@ class SignUpActivity : BaseActivity() {
         with(binding) {
             etName.afterTextChanged {
                 signUpViewModel.validateForm(
-                    etName.text.toString(), etEmail.text.toString(),
-                    etPassword.text.toString()
+                    etName.text.toString(),
+                    etEmail.text.toString(),
+                    etPassword.text.toString(),
+                    etConfirmPassword.text.toString()
                 )
             }
             etEmail.afterTextChanged {
                 signUpViewModel.validateForm(
                     etName.text.toString(),
-                    etEmail.text.toString(), etPassword.text.toString()
+                    etEmail.text.toString(),
+                    etPassword.text.toString(),
+                    etConfirmPassword.text.toString()
                 )
             }
             etPassword.afterTextChanged {
                 signUpViewModel.validateForm(
                     etName.text.toString(),
-                    etEmail.text.toString(), etPassword.text.toString()
+                    etEmail.text.toString(),
+                    etPassword.text.toString(),
+                    etConfirmPassword.text.toString()
+                )
+            }
+            etConfirmPassword.afterTextChanged {
+                signUpViewModel.validateForm(
+                    etName.text.toString(),
+                    etEmail.text.toString(),
+                    etPassword.text.toString(),
+                    etConfirmPassword.text.toString()
                 )
             }
         }

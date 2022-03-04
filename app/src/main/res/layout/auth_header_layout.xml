@@ -11,6 +11,7 @@
         android:contentDescription="@string/marvel_logo"
         android:src="@drawable/logo"
         android:layout_marginBottom="@dimen/header_margin_bottom"
+        android:layout_marginTop="@dimen/header_margin_top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -18,11 +18,11 @@ class LoginViewModel @Inject constructor(private val db: FirebaseDb) : ViewModel
 
     fun validateForm(email: String, password: String) {
         when {
-            !isEmailValid(email) -> {
+            !email.isEmailValid() -> {
                 _loginState.value = LoginState.EmailError(R.string.invalid_email)
                 _loginState.value = LoginState.IsFormValid(false)
             }
-            !isPasswordValid(password) -> {
+            !password.isPasswordValid() -> {
                 _loginState.value = LoginState.PasswordError(R.string.invalid_password)
                 _loginState.value = LoginState.IsFormValid(false)
             }
