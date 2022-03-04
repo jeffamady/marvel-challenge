@@ -2,7 +2,7 @@ package com.amadydev.intermedia.ui.base
 
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder>() : RecyclerView.Adapter<VH>() {
+abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
 
     var onClickListener: ((T) -> Unit)? = null
 

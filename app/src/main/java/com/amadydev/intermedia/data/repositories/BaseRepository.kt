@@ -1,22 +1,12 @@
 package com.amadydev.intermedia.data.repositories
 
-import com.amadydev.intermedia.data.models.NetResult
-import com.amadydev.intermedia.utils.Constants.PRIVATE_API_KEY
-import com.amadydev.intermedia.utils.Constants.PUBLIC_API_KEY
-import retrofit2.Response
+import com.amadydev.intermedia.BuildConfig.PRIVATE_API_KEY
+import com.amadydev.intermedia.BuildConfig.PUBLIC_API_KEY
 import java.security.MessageDigest
-import java.util.*
 
 abstract class BaseRepository {
 
     protected val authParams = AuthParams(PUBLIC_API_KEY, 1, generateHash())
-
-    protected fun <T> handleResult(result: Response<T>): NetResult<T> {
-        if (result.isSuccessful)
-            result.body()
-                ?.let { content -> return NetResult.Success(content) }
-        return NetResult.Error(result)
-    }
 
     protected class AuthParams(
         private val apiKey: String,

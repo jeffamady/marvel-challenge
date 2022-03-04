@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--Auth-->
-    <dimen name="header_margin_bottom">22dp</dimen>
+    <dimen name="header_margin_bottom">30dp</dimen>
+    <dimen name="header_margin_top">50dp</dimen>
     <dimen name="auth_margin_start">11dp</dimen>
     <dimen name="auth_margin_top">11dp</dimen>
     <dimen name="auth_margin_end">21dp</dimen>
@@ -25,4 +26,7 @@
     <dimen name="character_details_tv_desc_margin_top">21dp</dimen>
     <dimen name="character_details_tv_appears_margin_top">43dp</dimen>
     <dimen name="character_details_tv_appears_text_size">20sp</dimen>
+    <dimen name="character_details_tv_name_margin_top">30dp</dimen>
+    <dimen name="character_details_tv_name_margin_start">15dp</dimen>
+    <dimen name="character_details_tv_name_margin_end">10dp</dimen>
 </resources>
