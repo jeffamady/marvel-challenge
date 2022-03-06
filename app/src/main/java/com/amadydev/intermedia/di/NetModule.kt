@@ -2,7 +2,9 @@ package com.amadydev.intermedia.di
 
 import com.amadydev.intermedia.BuildConfig.BASE_API_URL
 import com.amadydev.intermedia.data.datasource.CharactersDataSource
+import com.amadydev.intermedia.data.datasource.EventsDataSource
 import com.amadydev.intermedia.data.services.CharactersService
+import com.amadydev.intermedia.data.services.EventsService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,4 +39,12 @@ class NetModule {
     @Provides
     fun provideCharactersDataSource(charactersService: CharactersService) =
         CharactersDataSource(charactersService)
+
+    @Provides
+    fun provideEventsService(@MarvelApi retrofit: Retrofit): EventsService =
+        retrofit.create(EventsService::class.java)
+
+    @Provides
+    fun provideEventsDataSource(eventsService: EventsService): EventsDataSource =
+        EventsDataSource(eventsService)
 }

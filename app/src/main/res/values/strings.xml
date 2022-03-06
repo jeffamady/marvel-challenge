@@ -29,5 +29,8 @@
     <string name="sorry_something_went_wrong">Sorry! Something went wrong</string>
     <string name="retry">Retry</string>
     <string name="no_internet">No Internet Connection! Please make sure you are connected and try again.</string>
+    <string name="show_comics_list">Show comics list</string>
+    <string name="event_comic_details_title">COMICS TO DISCUSS</string>
+
 
 </resources>

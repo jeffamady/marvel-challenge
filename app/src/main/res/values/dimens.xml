@@ -24,7 +24,7 @@
     <dimen name="character_details_tv_desc_margin_start_end">53dp</dimen>
     <dimen name="character_details_tv_appears_margin_start_end">63dp</dimen>
     <dimen name="character_details_tv_desc_margin_top">21dp</dimen>
-    <dimen name="character_details_tv_appears_margin_top">43dp</dimen>
+    <dimen name="character_details_tv_appears_margin_top">20dp</dimen>
     <dimen name="character_details_tv_appears_text_size">20sp</dimen>
     <dimen name="character_details_tv_name_margin_top">30dp</dimen>
     <dimen name="character_details_tv_name_margin_start">15dp</dimen>

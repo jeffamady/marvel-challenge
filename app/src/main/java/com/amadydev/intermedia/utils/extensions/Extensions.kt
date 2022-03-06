@@ -5,6 +5,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amadydev.intermedia.data.models.Event
+import com.amadydev.intermedia.data.models.EventDto
 import com.google.android.material.textfield.TextInputEditText
 import java.util.regex.Pattern
 
@@ -33,9 +35,11 @@ fun String.isSamePassword(confirmPass: String) =
     this == confirmPass
 
 // Disable Scroll vertical
-fun appearancesLinearLayoutManager(context: Context) = object : LinearLayoutManager(context) {
+fun comicsLinearLayoutManager(context: Context) = object : LinearLayoutManager(context) {
     override fun canScrollVertically(): Boolean = false
 }
 
 fun String.toYear() = this.substringBefore("-")
 
+fun List<Event>.toEventDtoList() =
+    this.map { EventDto(it.id, it.title, it.thumbnail, it.date ?: "--") }
