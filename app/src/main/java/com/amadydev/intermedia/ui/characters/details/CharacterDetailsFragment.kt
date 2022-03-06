@@ -12,7 +12,7 @@ import com.amadydev.intermedia.R
 import com.amadydev.intermedia.databinding.FragmentCharacterDetailsBinding
 import com.amadydev.intermedia.ui.main.MainScreenActivity
 import com.amadydev.intermedia.utils.binding.setImage
-import com.amadydev.intermedia.utils.extensions.appearancesLinearLayoutManager
+import com.amadydev.intermedia.utils.extensions.comicsLinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +21,7 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
     private val binding get() = _binding!!
     private val args by navArgs<CharacterDetailsFragmentArgs>()
     private val viewModel: CharacterDetailsViewModel by viewModels()
-    private val adapter = ComicsAdapter()
+    private val comicsAdapter = ComicsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +39,7 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
             with(binding) {
                 when (it) {
                     is CharacterDetailsViewModel.ComicsState.Success -> {
-                        adapter.addAll(it.comics)
+                        comicsAdapter.addAll(it.comics)
                         iError.root.isVisible = false
                         detailsContainer.isVisible = true
                     }
@@ -69,9 +69,11 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
             setImage(imageCharacterThumbnail, character.thumbnail)
             textDescription.text = character.description
 
-            rvAppearances.layoutManager =
-                appearancesLinearLayoutManager(requireContext())
-            rvAppearances.adapter = adapter
+            iRvComics.rvComics.apply {
+                layoutManager =
+                    comicsLinearLayoutManager(requireContext())
+                adapter = comicsAdapter
+            }
 
             // Get Comics
             viewModel.getComics(character.id)
