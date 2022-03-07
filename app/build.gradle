@@ -18,6 +18,10 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField 'String', 'BASE_API_URL', '"https://gateway.marvel.com/v1/public/"'
+        buildConfigField 'String', 'PUBLIC_API_KEY', '"ef20d2c958c8b603dec0067f6e8e6d2a"'
+        buildConfigField 'String', 'PRIVATE_API_KEY', '"63515a9c23a2773cdded9758cb09f36a479ec4e3"'
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -51,8 +55,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //Dagger hilt
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    kapt "com.google.dagger:hilt-android-compiler:2.38.1"
+    implementation "com.google.dagger:hilt-android:2.39.1"
+    kapt "com.google.dagger:hilt-android-compiler:2.39.1"
     implementation "androidx.hilt:hilt-navigation-fragment:1.0.0"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
 
@@ -68,8 +72,8 @@ dependencies {
     // Api calls
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation "com.squareup.okhttp3:okhttp:4.9.3"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
+    implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
+    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
 
     // Image loading
     implementation "com.github.bumptech.glide:glide:4.12.0"

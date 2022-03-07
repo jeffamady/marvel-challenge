@@ -8,15 +8,17 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="login">LOGIN</string>
     <string name="signup">SIGNUP</string>
-    <string name="invalid_password">Password must have at least 8 characters, an uppercase and 1 number</string>
+    <string name="invalid_password">Password must have at least 8 characters, 1 uppercase and 1 number</string>
+    <string name="not_same_password">Passwords are not the same</string>
     <string name="invalid_name">Please enter a name</string>
     <string name="invalid_email">Not a valid email</string>
     <string name="already_have_an_account_sign_in">Already have an account? SIGN IN</string>
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? SIGN UP</string>
     <string name="please_wait">Please wait…</string>
-    <string name="registered">User registered successfully</string>
+    <string name="registered">%1$s, you are registered successfully</string>
     <string name="login_form_error">The combination of Email and Password is not correct. Please retry.</string>
     <string name="signup_form_error">User already registered.Please try with another.</string>
     <string name="success">Success</string>
@@ -24,5 +26,11 @@
     <string name="fb_login_protocol_scheme">fb2217065038431686</string>
     <!-- Character Details -->
     <string name="appears_in">APPEARS IN THESE COMICS</string>
+    <string name="sorry_something_went_wrong">Sorry! Something went wrong</string>
+    <string name="retry">Retry</string>
+    <string name="no_internet">No Internet Connection! Please make sure you are connected and try again.</string>
+    <string name="show_comics_list">Show comics list</string>
+    <string name="event_comic_details_title">COMICS TO DISCUSS</string>
+
 
 </resources>

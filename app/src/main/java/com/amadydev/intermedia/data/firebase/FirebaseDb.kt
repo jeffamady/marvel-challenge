@@ -1,6 +1,5 @@
 package com.amadydev.intermedia.data.firebase
 
-import android.util.Log
 import com.amadydev.intermedia.ui.login.LoginActivity
 import com.amadydev.intermedia.ui.login.LoginViewModel
 import com.amadydev.intermedia.ui.signup.SignUpViewModel
@@ -30,12 +29,14 @@ class FirebaseDb @Inject constructor() {
 
     fun registerUser(
         viewModel: SignUpViewModel,
-        name: String, email: String, password: String
+        name: String,
+        email: String,
+        password: String
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful)
-                    viewModel.userRegisteredSuccess(true)
+                    viewModel.userRegisteredSuccess(true, name)
                 else
                     viewModel.userRegisteredSuccess(false)
             }
@@ -84,4 +85,6 @@ class FirebaseDb @Inject constructor() {
             })
 
     }
+
+    fun signOutUser() = auth.signOut()
 }

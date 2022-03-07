@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amadydev.intermedia.R
-import com.amadydev.intermedia.ui.base.BaseAdapter
 import com.amadydev.intermedia.data.models.Character
 import com.amadydev.intermedia.databinding.ViewHeroItemBinding
+import com.amadydev.intermedia.ui.base.BaseAdapter
 import com.amadydev.intermedia.utils.binding.setImage
 
 class CharactersAdapter : BaseAdapter<Character, CharactersAdapter.CharactersViewHolder>() {

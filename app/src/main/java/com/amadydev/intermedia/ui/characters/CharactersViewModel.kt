@@ -4,43 +4,65 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amadydev.intermedia.data.Resource
 import com.amadydev.intermedia.data.models.Character
-import com.amadydev.intermedia.data.models.NetResult
-import com.amadydev.intermedia.data.repositories.CharactersRepository
+import com.amadydev.intermedia.data.repositories.CharactersRepositoryImp
+import com.amadydev.intermedia.utils.Constants.LIMIT_CHARACTER
+import com.amadydev.intermedia.utils.Constants.START_OFF_SET
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
-    private val charactersRepository: CharactersRepository
+    private val charactersRepository: CharactersRepositoryImp
 ) : ViewModel() {
-
-    private val _characters = MutableLiveData<List<Character>>()
-    val characters: LiveData<List<Character>> get() = _characters
-    private var mOffset = 1
+    private val _charactersState = MutableLiveData<CharactersState>()
+    val charactersState: LiveData<CharactersState> = _charactersState
+    private var mOffset = LIMIT_CHARACTER
 
     init {
-        loadCharacters(0)
+        loadCharacters(START_OFF_SET)
     }
 
     private fun loadCharacters(offset: Int) {
-        viewModelScope.launch {
-            when (val response = charactersRepository.getCharacters(offset)) {
-                is NetResult.Success -> {
-                    _characters.postValue(response.data.charactersList.characters)
-                }
-                is NetResult.Error -> {
-                    // TODO complete
+        _charactersState.value = CharactersState.Loading(true)
+        viewModelScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                charactersRepository.getCharacters(offset)
+            }.run {
+                when (status) {
+                    Resource.Status.SUCCESS -> {
+                        _charactersState.value = CharactersState.Loading(false)
+                        _charactersState.value = data?.results?.let { CharactersState.Success(it) }
+                    }
+                    Resource.Status.ERROR -> {
+                        _charactersState.value = CharactersState.Loading(false)
+                        _charactersState.value = CharactersState.Error(resId)
+                    }
                 }
             }
         }
     }
 
     fun loadMoreCharacters() {
-        // TODO complete
         loadCharacters(mOffset)
-        mOffset ++
+        mOffset += LIMIT_CHARACTER
+    }
+
+    // To reload where the user was
+    fun retry() {
+        if (mOffset == LIMIT_CHARACTER)
+            loadCharacters(START_OFF_SET)
+        else
+            loadCharacters(mOffset)
+    }
+
+    sealed class CharactersState {
+        data class Success(val characters: List<Character>) : CharactersState()
+        data class Loading(val isLoading: Boolean) : CharactersState()
+        data class Error(val resId: Int) : CharactersState()
     }
 }

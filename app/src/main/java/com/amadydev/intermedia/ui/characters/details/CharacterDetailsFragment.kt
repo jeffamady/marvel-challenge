@@ -1,55 +1,100 @@
 package com.amadydev.intermedia.ui.characters.details
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
-import androidx.appcompat.app.ActionBar
+import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.amadydev.intermedia.R
 import com.amadydev.intermedia.databinding.FragmentCharacterDetailsBinding
 import com.amadydev.intermedia.ui.main.MainScreenActivity
 import com.amadydev.intermedia.utils.binding.setImage
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.amadydev.intermedia.utils.extensions.comicsLinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
-    private lateinit var binding: FragmentCharacterDetailsBinding
+    private var _binding: FragmentCharacterDetailsBinding? = null
+    private val binding get() = _binding!!
     private val args by navArgs<CharacterDetailsFragmentArgs>()
-    private var bottomNavigationView: BottomNavigationView? = null
-    private lateinit var actionBar: ActionBar
-    private lateinit var title: TextView
+    private val viewModel: CharacterDetailsViewModel by viewModels()
+    private val comicsAdapter = ComicsAdapter()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = FragmentCharacterDetailsBinding.bind(view)
-        bottomNavigationView = activity?.findViewById(R.id.bottom_nav_view)
-        bottomNavigationView?.let { it.isVisible = false }
-        (activity as MainScreenActivity).supportActionBar?.let { actionBar = it }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCharacterDetailsBinding.inflate(inflater, container, false)
         setupUI()
+        setObservers()
+        return binding.root
+    }
+
+    private fun setObservers() {
+        viewModel.comicState.observe(viewLifecycleOwner) {
+            with(binding) {
+                when (it) {
+                    is CharacterDetailsViewModel.ComicsState.Success -> {
+                        comicsAdapter.addAll(it.comics)
+                        iError.root.isVisible = false
+                        detailsContainer.isVisible = true
+                    }
+                    is CharacterDetailsViewModel.ComicsState.Loading -> {
+                        iError.root.isVisible = false
+                        loading.root.isVisible = it.isLoading
+                    }
+                    is CharacterDetailsViewModel.ComicsState.Error -> {
+                        detailsContainer.isVisible = false
+                        iError.root.isVisible = true
+                        iError.tvError.text = getString(it.resId)
+                    }
+                }
+            }
+        }
     }
 
     private fun setupUI() {
         val character = args.character
         with(binding) {
-            activity?.findViewById<TextView>(R.id.tvToolbar)?.let {
-                title = it
-                title.text = character.name
+            (activity as MainScreenActivity).apply {
+                setActionBarTitle(character.name)
+                changeUpButtonIcon()
+                // Hide the navigation bottom
+                bottomNavView(false)
             }
             setImage(imageCharacterThumbnail, character.thumbnail)
             textDescription.text = character.description
 
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24)
+            iRvComics.rvComics.apply {
+                layoutManager =
+                    comicsLinearLayoutManager(requireContext())
+                adapter = comicsAdapter
+            }
+
+            // Get Comics
+            viewModel.getComics(character.id)
+
+            // Listener
+            binding.iError.btnRetry.setOnClickListener {
+                viewModel.getComics(character.id)
+            }
         }
     }
 
+
     override fun onDestroy() {
-        bottomNavigationView?.let { it.isVisible = true }
-        actionBar.setDisplayHomeAsUpEnabled(false)
-        title.text = getString(R.string.app_name)
+        (activity as MainScreenActivity).apply {
+            // Reset appbar title
+            setActionBarTitle()
+
+            // Show the navigation bottom
+            bottomNavView(true)
+        }
+        _binding = null
         super.onDestroy()
     }
 
